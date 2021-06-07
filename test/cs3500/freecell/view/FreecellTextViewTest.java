@@ -22,10 +22,13 @@ public class FreecellTextViewTest {
 
   SimpleFreecellModel toStringSFCM1;
   SimpleFreecellModel toStringSFCM2;
+  SimpleFreecellModel toStringSFCM3;
+
   List<ICard> toStringDeck;
 
   FreecellTextView toStringFCTV1;
   FreecellTextView toStringFCTV2;
+  FreecellTextView toStringFCTV3;
 
   Appendable ap;
 
@@ -44,10 +47,13 @@ public class FreecellTextViewTest {
     toStringSFCM2.move(PileType.CASCADE, 7, 4,
         PileType.FOUNDATION, 0);
 
+    toStringSFCM3 = new SimpleFreecellModel();
+
     ap = new StringBuilder();
 
     toStringFCTV1 = new FreecellTextView(toStringSFCM1, ap);
     toStringFCTV2 = new FreecellTextView(toStringSFCM2, ap);
+    toStringFCTV3 = new FreecellTextView(toStringSFCM3, ap);
   }
 
   /**
@@ -73,6 +79,19 @@ public class FreecellTextViewTest {
             + "C7: 7♣, 2♦, 10♦, 5♥, K♥, 8♠\n"
             + "C8: 8♣, 3♦, J♦, 6♥",
         toStringFCTV2.toString());
+  }
+
+  /**
+   * Test a case where the startgame throws an exception.
+   */
+  @Test
+  public void testToStringStartGameException() {
+    try {
+      toStringSFCM3.startGame(toStringDeck, -1, 0, false);
+    } catch (IllegalArgumentException e) {
+      //this is a dumb test
+    }
+    assertEquals("", toStringFCTV3.toString());
   }
 
 

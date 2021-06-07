@@ -118,11 +118,6 @@ public class SimpleFreecellModelTest {
 
   }
 
-
-  //check that values for the class are correct after the game has started
-
-
-
   /**
    * Check that the cascadingPiles parameter is no longer null after the game has been started.
   */
@@ -132,7 +127,20 @@ public class SimpleFreecellModelTest {
         nineOfSpades.equals(startGameSFCMNonErrNoShuf.getCascadeCardAt(7,5)));
   }
 
-
+  /**
+   * Check that game is properly restarted after startgame is called on an already started game.
+   */
+  @Test
+  public void testStartGameGameRestart() {
+    startGameSFCMGameAlreadyStarted.startGame(startGameSFCMGameAlreadyStarted.getDeck(),
+        8, 4, false);
+    startGameSFCMGameAlreadyStarted.move(PileType.CASCADE,
+        0, 6, PileType.OPEN, 0);
+    startGameSFCMGameAlreadyStarted.startGame(startGameSFCMGameAlreadyStarted.getDeck(),
+        8, 4, false);
+    assertEquals(tenOfSpades, startGameSFCMGameAlreadyStarted.getCascadeCardAt(0,
+            6));
+  }
 
   /**
    * Check that cards were put in the right place if there was no shuffling of the deck.
@@ -357,7 +365,7 @@ public class SimpleFreecellModelTest {
   SimpleFreecellModel moveSFCMGameStarted12;
   SimpleFreecellModel moveSFCMGameStarted13;
   SimpleFreecellModel moveSFCMGameStarted14;
-
+  SimpleFreecellModel moveSFCMGameStarted15;
 
   Card nineOfSpades;
   Card aceOfSpades;
@@ -426,6 +434,29 @@ public class SimpleFreecellModelTest {
 
     moveSFCMGameStarted14 = new SimpleFreecellModel();
     moveSFCMGameStarted14.startGame(moveDeck, 8, 4, false);
+
+    moveSFCMGameStarted15 = new SimpleFreecellModel();
+    moveSFCMGameStarted15.startGame(moveDeck, 8, 4, false);
+  }
+
+  /**
+   * Test a move from a cascade to a foundation with a card in it already.
+   */
+  @Test
+  public void testMoveCascToFoundationWithCard() {
+    moveSFCMGameStarted15.move(PileType.CASCADE,
+        7, 5, PileType.OPEN, 0);
+    moveSFCMGameStarted15.move(PileType.CASCADE,
+        7, 4, PileType.FOUNDATION, 0);
+    moveSFCMGameStarted15.move(PileType.CASCADE,
+        0, 6, PileType.OPEN, 1);
+    moveSFCMGameStarted15.move(PileType.CASCADE,
+        0, 5, PileType.FOUNDATION, 0);
+
+    assertEquals(true,
+        aceOfSpades.equals(moveSFCMGameStarted15.getFoundationCardAt(0, 0)));
+    assertEquals(true,
+        twoOfSpades.equals(moveSFCMGameStarted15.getFoundationCardAt(0, 1)));
   }
 
   /**

@@ -13,7 +13,7 @@ public class SimpleFreecellModel implements FreecellModel<ICard> {
 
   private boolean isGameStarted;
   private boolean isGameOver;
-  private List<CascadingPile> cascadingPiles;
+  protected List<CascadingPile> cascadingPiles;
   private List<OpenPile> openPiles;
   private List<FoundationPile> foundationPiles;
 
